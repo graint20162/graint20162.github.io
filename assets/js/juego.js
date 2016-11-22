@@ -1,3 +1,7 @@
+/*
+Variables a utilizar a lo largo de este juego
+*/
+
 var map;
 var tileset;
 var layer;
@@ -7,31 +11,40 @@ var jumpTimer = 0;
 var cursors;
 var jumpButton;
 var bg;
+// carga el conjunto de huesos
+var theBones;
 
 var iniciar = {
 
     preload: function() {
 
-        saveWorld.load.tilemap('level1', 'assets/gameAssets/level1.json', null, Phaser.Tilemap.TILED_JSON);
-        saveWorld.load.image('tiles-1', 'assets/gameAssets/tiles-1.png');
-        saveWorld.load.spritesheet('dude', 'assets/gameAssets/dude.png', 32, 48);
-        saveWorld.load.spritesheet('droid', 'assets/gameAssets/droid.png', 32, 32);
-        saveWorld.load.image('starSmall', 'assets/gameAssets/star.png');
-        saveWorld.load.image('starBig', 'assets/gameAssets/star2.png');
-        saveWorld.load.image('background', 'assets/gameAssets/bg.jpg');
+        /*       
+        Se añaden los diferentes recursos a utilizar a lo largo del juego.
+        La primera carga hace referencia a un archivo .json que contiene la ubicación espacial de los diferentes objetos
+        que hacen parte del entorno colisionable, estos son los distintos tipos de muro.
+
+        Luego se cargan los personajes.
+        */
+        dogWorld.load.tilemap('level1', 'assets/gameAssets/level1.json', null, Phaser.Tilemap.TILED_JSON);
+        dogWorld.load.image('tiles-1', 'assets/gameAssets/tiles-1.png');
+        dogWorld.load.spritesheet('dude', 'assets/gameAssets/doggy.png', 32, 32);
+        dogWorld.load.spritesheet('bone', 'assets/gameAssets/bone.png', 32, 32);
+        dogWorld.load.image('starSmall', 'assets/gameAssets/star.png');
+        dogWorld.load.image('starBig', 'assets/gameAssets/star2.png');
+        dogWorld.load.image('background', 'assets/gameAssets/background.png');
 
     },
 
     create: function() {
 
-        saveWorld.physics.startSystem(Phaser.Physics.ARCADE);
+        dogWorld.physics.startSystem(Phaser.Physics.ARCADE);
 
-        saveWorld.stage.backgroundColor = '#000000';
+        dogWorld.stage.backgroundColor = '#000000';
 
-        bg = saveWorld.add.tileSprite(0, 0, 800, 600, 'background');
+        bg = dogWorld.add.tileSprite(0, 0, 800, 600, 'background');
         bg.fixedToCamera = true;
 
-        map = saveWorld.add.tilemap('level1');
+        map = dogWorld.add.tilemap('level1');
 
         map.addTilesetImage('tiles-1');
 
@@ -44,29 +57,73 @@ var iniciar = {
 
         layer.resizeWorld();
 
-        saveWorld.physics.arcade.gravity.y = 250;
+        dogWorld.physics.arcade.gravity.y = 250;
 
-        player = saveWorld.add.sprite(32, 32, 'dude');
-        saveWorld.physics.enable(player, Phaser.Physics.ARCADE);
+        player = dogWorld.add.sprite(32, 32, 'dude');
+        dogWorld.physics.enable(player, Phaser.Physics.ARCADE);
 
-        player.body.bounce.y = 0.2;
+        //player.body.bounce.y = 0.2;
         player.body.collideWorldBounds = true;
-        player.body.setSize(20, 32, 5, 16);
+        player.body.setSize(20, 32, 0, 0);
 
-        player.animations.add('left', [0, 1, 2, 3], 10, true);
-        player.animations.add('turn', [4], 20, true);
+        player.animations.add('left', [12, 13, 14, 15], 10, true);
+        player.animations.add('turn', [17], 20, true);
         player.animations.add('right', [5, 6, 7, 8], 10, true);
 
-        saveWorld.camera.follow(player);
+        dogWorld.camera.follow(player);
 
-        cursors = saveWorld.input.keyboard.createCursorKeys();
-        jumpButton = saveWorld.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        //theBones = dogWorld.add.group();
 
+        /*
+        for (var i = 0; i < 5; i++)
+        {
+            var s = theBones.create(dogWorld.rnd.integerInRange(100, 700), dogWorld.rnd.integerInRange(32, 200), 'bone');
+            //s.animations.add('spin', [0,1,2,3]);
+            //s.play('spin', 20, true);
+            dogWorld.physics.enable(s, Phaser.Physics.ARCADE);
+            s.body.velocity.x = dogWorld.rnd.integerInRange(-200, 200);
+            s.body.velocity.y = dogWorld.rnd.integerInRange(-200, 200);
+        }
+        */
+
+        //  This will set physics properties on all group children that have a 'body' (i.e. it will skip the groupB)
+        //theBones.setAll('body.collideWorldBounds', true);
+        //theBones.setAll('body.bounce.x', 1);
+        //theBones.setAll('body.bounce.y', 1);
+        //theBones.setAll('body.minBounceVelocity', 0);
+
+
+        theBones = dogWorld.add.sprite(200, 32, 'bone');
+        dogWorld.physics.enable(theBones, Phaser.Physics.ARCADE);
+
+        //player.body.bounce.y = 0.2;
+        theBones.body.collideWorldBounds = true;
+        theBones.body.setSize(40, 32, 0, 0);
+
+        //dogWorld.state.start('fin'); 
+
+        this.collisionHandler();
+
+        cursors = dogWorld.input.keyboard.createCursorKeys();
+        jumpButton = dogWorld.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    },
+
+
+    collisionHandler: function() {
+        if(player.body.x == (theBones.body.x + 16) && player.body.y == (theBones.body.y+16)){
+            theBones.destroy();
+        }
     },
 
     update: function() {
 
-        saveWorld.physics.arcade.collide(player, layer);
+        dogWorld.physics.arcade.collide(player, layer);
+        //dogWorld.physics.arcade.collide(op, layer);
+        dogWorld.physics.arcade.collide(theBones, layer);
+        //dogWorld.physics.arcade.collide(theBones);
+
+        //dogWorld.physics.arcade.collide(player.sprite, theBones.sprite, collisionHandler, null, this);
 
         player.body.velocity.x = 0;
 
@@ -109,22 +166,29 @@ var iniciar = {
         }
         }
 
-        if (jumpButton.isDown && player.body.onFloor() && saveWorld.time.now > jumpTimer)
+        if (jumpButton.isDown && player.body.onFloor() && dogWorld.time.now > jumpTimer)
         {
         player.body.velocity.y = -250;
-        jumpTimer = saveWorld.time.now + 750;
+        jumpTimer = dogWorld.time.now + 750;
         }
 
     },
 
+
+
     render: function() {
 
-    // saveWorld.debug.text(saveWorld.time.physicsElapsed, 32, 32);
-    // saveWorld.debug.body(player);
-    // saveWorld.debug.bodyInfo(player, 16, 24);
+    // dogWorld.debug.text(dogWorld.time.physicsElapsed, 32, 32);
+    // dogWorld.debug.body(player);
+    // dogWorld.debug.bodyInfo(player, 16, 24);
+
+    /* Debug text permite imprimir encima del ambiente. La mayoria de posiciones logradas
+        y la detección de colisiones se hicieron por medio de este debug. En este caso, se hizo para
+        detectar cuando jugador y distraccion se cruzaban*/
+        dogWorld.debug.text("Diferencia x: " + (player.body.x - (theBones.body.x+16)), 32, 32);
 
     },
-    /*         saveWorld.state.start('fin');
+    /*         dogWorld.state.start('fin');
     */
 
 };
