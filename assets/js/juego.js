@@ -18,7 +18,7 @@ var iniciar = {
         saveWorld.load.spritesheet('droid', 'assets/gameAssets/droid.png', 32, 32);
         saveWorld.load.image('starSmall', 'assets/gameAssets/star.png');
         saveWorld.load.image('starBig', 'assets/gameAssets/star2.png');
-        saveWorld.load.image('background', 'assets/gameAssets/background2.png');
+        saveWorld.load.image('background', 'assets/gameAssets/bg.jpg');
 
     },
 
