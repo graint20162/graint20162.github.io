@@ -1,6 +1,6 @@
-// Estado final.
+// Este es llamado cuando el jugador, nuestra mascota, termina de acumular las cinco banderas y se las lleva a su entrenador
 
-var winState = {
+var estadoGanador = {
 
     preload: function(){
          dogWorld.load.image('findeljuego', 'assets/img/game/fin.png');
@@ -19,7 +19,6 @@ var winState = {
     
     update: function() {
         contador = 0;
-        // body...
     },
 
     // reinicia el juego   
