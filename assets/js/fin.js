@@ -1,4 +1,12 @@
-// Este es llamado cuando el jugador, nuestra mascota, termina de acumular las cinco banderas y se las lleva a su entrenador
+/* ********************************
+   ********************************
+Presentado por: Jhonn Alejandro Rojas Robayo
+Codigo: 25571143
+Correo: jharojasro@unal.edu.co
+Universidad Nacional de Colombia
+
+************************************
+******************************** */
 
 var estadoGanador = {
 
