@@ -13,6 +13,7 @@ var jumpButton;
 var bg;
 // carga el conjunto de huesos
 var theBones;
+var contador = 0;
 
 var iniciar = {
 
@@ -99,11 +100,14 @@ var iniciar = {
 	    	// Se asigna un valor muy grande a las coordenadas de key para que no vuelva a entrar al if
 	    	theFlag.y = 9999999;
 	    	theFlag.x = 9999999;
+		contador += 1;
         }
         
         /* Si hace contacto con la puerta y si recupera el total de llaves gana */
         if(player.x == 320 && player.y >= 976) {
-                dogWorld.state.start('fin');
+		if(contador == 1){
+			dogWorld.state.start('fin');
+		}
         }
     },
 
