@@ -107,6 +107,8 @@ var iniciar = {
         if(player.x == 320 && player.y >= 976) {
 		if(contador == 1){
 			dogWorld.state.start('fin');
+		} else {
+			dogWorld.debug.text("Busca las banderas, ¡chico!", 32, 256);
 		}
         }
     },
