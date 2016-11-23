@@ -165,7 +165,7 @@ var iniciar = {
         }
         
         /* Si hace contacto con el entrenador y si tiene las 5 banderas llama al ultimo estado, si no, debe buscarlas todas */
-        if(player.x == 340 && player.y >= 976) {
+        if(player.x == 330 && player.y >= 976) {
     		if(contador == 5){
     			dogWorld.state.start('fin');
     		} else {
@@ -175,29 +175,27 @@ var iniciar = {
     },
 
     update: function() {
-
+	//Habilita las colisiones para todos los objetos con el laberinto
         dogWorld.physics.arcade.collide(player, layer);
-        //dogWorld.physics.arcade.collide(op, layer);
         dogWorld.physics.arcade.collide(theBones, layer);
         dogWorld.physics.arcade.collide(theFlag, layer);
         dogWorld.physics.arcade.collide(theFlag2, layer);
         dogWorld.physics.arcade.collide(theFlag3, layer);
         dogWorld.physics.arcade.collide(theFlag4, layer);
         dogWorld.physics.arcade.collide(theFlag5, layer);
-        //dogWorld.physics.arcade.collide(theBones);
-
-        //dogWorld.physics.arcade.collide(player.sprite, theBones.sprite, recogerBanderas, null, this);
-
+       
+	// Se le anula la capacidad de velocidad para que pueda ser movido a voluntad
         player.body.velocity.x = 0;
 
+	// CUando se presiona (isDown) a la izquierda el va a 150 de velocidad a esa dirección y así sucesivamente
         if (cursors.left.isDown){
             player.body.velocity.x = -150;
-
+		// Facing es hacia donde esta mirando, esa es la animación
             if (facing != 'left') {
                 player.animations.play('left');
                 facing = 'left';
             }
-        }
+        } // mira a la drecha y se presiona la flecha derecha del teclado
         else if (cursors.right.isDown) {
             player.body.velocity.x = 150;
 
@@ -205,7 +203,7 @@ var iniciar = {
                 player.animations.play('right');
                 facing = 'right';
             }
-        }
+        } // Aquí se repite lo mismo, solo que ahora se usa la barra espaciadora
         else {
             if (facing != 'idle')  {
                 player.animations.stop();
@@ -220,12 +218,12 @@ var iniciar = {
             facing = 'idle';
             }
         }
-
+	// SI esta saltando se modifica la velocidad vertical
         if (jumpButton.isDown && player.body.onFloor() && dogWorld.time.now > jumpTimer) {
         player.body.velocity.y = -250;
         jumpTimer = dogWorld.time.now + 750;
         }
-        
+        // Se llama a recoger banderas
         this.recogerBanderas();
     },
 
