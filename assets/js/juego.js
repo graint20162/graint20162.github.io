@@ -69,40 +69,20 @@ var iniciar = {
         player.animations.add('turn', [17], 20, true);
         player.animations.add('right', [5, 6, 7, 8], 10, true);
 
+        // Esta función se encarga de seguir al jugador
         dogWorld.camera.follow(player);
 
-        //theBones = dogWorld.add.group();
-
-        /*
-        for (var i = 0; i < 5; i++)
-        {
-            var s = theBones.create(dogWorld.rnd.integerInRange(100, 700), dogWorld.rnd.integerInRange(32, 200), 'bone');
-            //s.animations.add('spin', [0,1,2,3]);
-            //s.play('spin', 20, true);
-            dogWorld.physics.enable(s, Phaser.Physics.ARCADE);
-            s.body.velocity.x = dogWorld.rnd.integerInRange(-200, 200);
-            s.body.velocity.y = dogWorld.rnd.integerInRange(-200, 200);
-        }
-        */
-
-        //  This will set physics properties on all group children that have a 'body' (i.e. it will skip the groupB)
-        //theBones.setAll('body.collideWorldBounds', true);
-        //theBones.setAll('body.bounce.x', 1);
-        //theBones.setAll('body.bounce.y', 1);
-        //theBones.setAll('body.minBounceVelocity', 0);
-
-
+        // Carga al entrenador Bone
         theBones = dogWorld.add.sprite(320, 976, 'bone');
         dogWorld.physics.enable(theBones, Phaser.Physics.ARCADE);
 
-        //player.body.bounce.y = 0.2;
+        //Permite colisiones con el mundo [recuadro]
         theBones.body.collideWorldBounds = true;
         theBones.body.setSize(40, 32, 0, 0);
         
+        // De forma analoga se realiza de la misma forma con la bandera
         theFlag = dogWorld.add.sprite(818, 528, 'flag');
         dogWorld.physics.enable(theFlag, Phaser.Physics.ARCADE);
-
-        //player.body.bounce.y = 0.2;
         theFlag.body.collideWorldBounds = true;
         theFlag.body.setSize(40, 32, 0, 0);
 
@@ -114,8 +94,11 @@ var iniciar = {
     },
 
     collisionHandler: function() {
-        if(player.x == 818 && player.y >= 528) {
-                theFlag.destroy();
+        if(Math.abs(player.x - theFlag.x) < 20 && Math.abs(player.y - theFlag.y) < 20){
+	    	theFlag.destroy();
+	    	// Se asigna un valor muy grande a las coordenadas de key para que no vuelva a entrar al if
+	    	theFlag.y = 9999999;
+	    	theFlag.x = 9999999;
         }
         
         /* Si hace contacto con la puerta y si recupera el total de llaves gana */
