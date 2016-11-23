@@ -165,7 +165,7 @@ var iniciar = {
         }
         
         /* Si hace contacto con el entrenador y si tiene las 5 banderas llama al ultimo estado, si no, debe buscarlas todas */
-        if(player.x == 330 && player.y >= 976) {
+        if(player.x == 320 && player.y >= 976) {
     		if(contador == 5){
     			dogWorld.state.start('fin');
     		} else {
