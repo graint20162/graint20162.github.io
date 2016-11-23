@@ -184,6 +184,11 @@ var iniciar = {
         detectar cuando jugador y distraccion se cruzaban*/
         dogWorld.debug.text(" x: " + player.body.x, 32, 32);
         dogWorld.debug.text("y: " + player.body.y, 32, 64);
+	    
+	    
+	if(contador == 1){
+		dogWorld.debug.text("Puedes abrir la puerta", 32, 256);
+	}
     },
     /*         dogWorld.state.start('fin');
     */
