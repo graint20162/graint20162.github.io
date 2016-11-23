@@ -1,5 +1,15 @@
+/* ********************************
+   ********************************
+Presentado por: Jhonn Alejandro Rojas Robayo
+Codigo: 25571143
+Correo: jharojasro@unal.edu.co
+Universidad Nacional de Colombia
+
+************************************
+******************************** */
+
 /*
-Variables a utilizar a lo largo de este juego
+Variables
 */
 
 var map; // Mapa
