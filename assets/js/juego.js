@@ -28,6 +28,7 @@ var iniciar = {
         dogWorld.load.tilemap('level1', 'assets/gameAssets/level1.json', null, Phaser.Tilemap.TILED_JSON);
         dogWorld.load.image('tiles-1', 'assets/gameAssets/tiles-1.png');
         dogWorld.load.spritesheet('dude', 'assets/gameAssets/doggy.png', 32, 32);
+        dogWorld.load.spritesheet('bone', 'assets/gameAssets/trainer.png', 32, 32);
         dogWorld.load.image('background', 'assets/gameAssets/background.png');
 
     },
