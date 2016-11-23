@@ -18,7 +18,7 @@ var winState = {
     },
     
     update: function() {
-        count = 0;
+        contador = 0;
         // body...
     },
 
