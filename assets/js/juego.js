@@ -30,6 +30,7 @@ var iniciar = {
         dogWorld.load.spritesheet('dude', 'assets/gameAssets/doggy.png', 32, 32);
         dogWorld.load.spritesheet('bone', 'assets/gameAssets/trainer.png', 32, 32);
         dogWorld.load.image('background', 'assets/gameAssets/background.png');
+        dogWorld.load.image('flag', 'assets/gameAssets/flag.png');
 
     },
 
@@ -97,20 +98,29 @@ var iniciar = {
         //player.body.bounce.y = 0.2;
         theBones.body.collideWorldBounds = true;
         theBones.body.setSize(40, 32, 0, 0);
+        
+        theFlag = dogWorld.add.sprite(818, 528, 'flag');
+        dogWorld.physics.enable(theFlag, Phaser.Physics.ARCADE);
+
+        //player.body.bounce.y = 0.2;
+        theFlag.body.collideWorldBounds = true;
+        theFlag.body.setSize(40, 32, 0, 0);
 
         //dogWorld.state.start('fin'); 
-
-        this.collisionHandler();
 
         cursors = dogWorld.input.keyboard.createCursorKeys();
         jumpButton = dogWorld.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
     },
 
-
     collisionHandler: function() {
-        if(player.body.x == (theBones.body.x + 16) && player.body.y == (theBones.body.y+16)){
-            theBones.destroy();
+        if(player.x == 818 && player.y >= 528) {
+                theFlag.destroy();
+        }
+        
+        /* Si hace contacto con la puerta y si recupera el total de llaves gana */
+        if(player.x == 320 && player.y >= 976) {
+                dogWorld.state.start('fin');
         }
     },
 
@@ -119,6 +129,7 @@ var iniciar = {
         dogWorld.physics.arcade.collide(player, layer);
         //dogWorld.physics.arcade.collide(op, layer);
         dogWorld.physics.arcade.collide(theBones, layer);
+        dogWorld.physics.arcade.collide(theFlag, layer);
         //dogWorld.physics.arcade.collide(theBones);
 
         //dogWorld.physics.arcade.collide(player.sprite, theBones.sprite, collisionHandler, null, this);
@@ -169,13 +180,8 @@ var iniciar = {
         player.body.velocity.y = -250;
         jumpTimer = dogWorld.time.now + 750;
         }
-
-        /* Si hace contacto con la puerta y si recupera el total de llaves gana */
-        if(player.x == 320 && player.y >= 976) {
-                dogWorld.state.start('fin');
-        }
-
-
+        
+        this.collisionHandler();
     },
 
 
@@ -192,7 +198,7 @@ var iniciar = {
         dogWorld.debug.text(" x: " + player.body.x , 32, 32);
         dogWorld.debug.text("y: " + player.body.y , 32, 64);
 
-        if(player.x == 320 && player.y >= 976) {
+        if(player.x == 818 && player.y >= 528) {
                 dogWorld.debug.text("LO encontraste" , 32, 128);
         }
     },
