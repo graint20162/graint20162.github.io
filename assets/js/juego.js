@@ -81,12 +81,32 @@ var iniciar = {
         theBones.body.collideWorldBounds = true;
         theBones.body.setSize(40, 32, 0, 0);
         
-        // De forma analoga se realiza de la misma forma con la bandera
+        // De forma analoga se realiza de la misma forma con las banderas
         theFlag = dogWorld.add.sprite(820, 528, 'flag');
         dogWorld.physics.enable(theFlag, Phaser.Physics.ARCADE);
         theFlag.body.collideWorldBounds = true;
         theFlag.body.setSize(40, 32, 0, 0);
 
+        theFlag2 = dogWorld.add.sprite(946, 144, 'flag');
+        dogWorld.physics.enable(theFlag2, Phaser.Physics.ARCADE);
+        theFlag2.body.collideWorldBounds = true;
+        theFlag2.body.setSize(40, 32, 0, 0);
+
+
+        theFlag3 = dogWorld.add.sprite(105, 896, 'flag');
+        dogWorld.physics.enable(theFlag3, Phaser.Physics.ARCADE);
+        theFlag3.body.collideWorldBounds = true;
+        theFlag3.body.setSize(40, 32, 0, 0);
+
+        theFlag4 = dogWorld.add.sprite(562, 848, 'flag');
+        dogWorld.physics.enable(theFlag4, Phaser.Physics.ARCADE);
+        theFlag4.body.collideWorldBounds = true;
+        theFlag4.body.setSize(40, 32, 0, 0);
+
+        theFlag5 = dogWorld.add.sprite(278, 560, 'flag');
+        dogWorld.physics.enable(theFlag5, Phaser.Physics.ARCADE);
+        theFlag5.body.collideWorldBounds = true;
+        theFlag5.body.setSize(40, 32, 0, 0);
         //dogWorld.state.start('fin'); 
 
         cursors = dogWorld.input.keyboard.createCursorKeys();
@@ -94,7 +114,7 @@ var iniciar = {
 
     },
 
-    collisionHandler: function() {
+    recogerBanderas: function() {
         if(Math.abs(player.x - theFlag.x) < 20 && Math.abs(player.y - theFlag.y) < 20){
 	    	theFlag.destroy();
 	    	// Se asigna un valor muy grande a las coordenadas de key para que no vuelva a entrar al if
@@ -102,14 +122,46 @@ var iniciar = {
 	    	theFlag.x = 9999999;
 		contador += 1;
         }
+
+        if(Math.abs(player.x - theFlag2.x) < 20 && Math.abs(player.y - theFlag2.y) < 20){
+            theFlag2.destroy();
+            // Se asigna un valor muy grande a las coordenadas de key para que no vuelva a entrar al if
+            theFlag2.y = 9999999;
+            theFlag2.x = 9999999;
+        contador += 1;
+        }
+        
+        if(Math.abs(player.x - theFlag3.x) < 20 && Math.abs(player.y - theFlag3.y) < 20){
+            theFlag3.destroy();
+            // Se asigna un valor muy grande a las coordenadas de key para que no vuelva a entrar al if
+            theFlag3.y = 9999999;
+            theFlag3.x = 9999999;
+        contador += 1;
+        }
+        
+         if(Math.abs(player.x - theFlag4.x) < 20 && Math.abs(player.y - theFlag4.y) < 20){
+            theFlag4.destroy();
+            // Se asigna un valor muy grande a las coordenadas de key para que no vuelva a entrar al if
+            theFlag4.y = 9999999;
+            theFlag4.x = 9999999;
+        contador += 1;
+        }
+
+         if(Math.abs(player.x - theFlag5.x) < 20 && Math.abs(player.y - theFlag5.y) < 20){
+            theFlag5.destroy();
+            // Se asigna un valor muy grande a las coordenadas de key para que no vuelva a entrar al if
+            theFlag5.y = 9999999;
+            theFlag5.x = 9999999;
+        contador += 1;
+        }
         
         /* Si hace contacto con la puerta y si recupera el total de llaves gana */
         if(player.x == 320 && player.y >= 976) {
-		if(contador == 1){
-			dogWorld.state.start('fin');
-		} else {
-			dogWorld.debug.text("Busca las banderas, ¡chico!", 32, 256);
-		}
+    		if(contador == 5){
+    			dogWorld.state.start('fin');
+    		} else {
+    			dogWorld.debug.text("Busca las banderas, ¡chico!", 32, 256);
+    		}
         }
     },
 
@@ -119,58 +171,53 @@ var iniciar = {
         //dogWorld.physics.arcade.collide(op, layer);
         dogWorld.physics.arcade.collide(theBones, layer);
         dogWorld.physics.arcade.collide(theFlag, layer);
+        dogWorld.physics.arcade.collide(theFlag2, layer);
+        dogWorld.physics.arcade.collide(theFlag3, layer);
+        dogWorld.physics.arcade.collide(theFlag4, layer);
+        dogWorld.physics.arcade.collide(theFlag5, layer);
         //dogWorld.physics.arcade.collide(theBones);
 
-        //dogWorld.physics.arcade.collide(player.sprite, theBones.sprite, collisionHandler, null, this);
+        //dogWorld.physics.arcade.collide(player.sprite, theBones.sprite, recogerBanderas, null, this);
 
         player.body.velocity.x = 0;
 
-        if (cursors.left.isDown)
-        {
-        player.body.velocity.x = -150;
+        if (cursors.left.isDown){
+            player.body.velocity.x = -150;
 
-        if (facing != 'left')
-        {
-        player.animations.play('left');
-        facing = 'left';
+            if (facing != 'left') {
+                player.animations.play('left');
+                facing = 'left';
+            }
         }
-        }
-        else if (cursors.right.isDown)
-        {
-        player.body.velocity.x = 150;
+        else if (cursors.right.isDown) {
+            player.body.velocity.x = 150;
 
-        if (facing != 'right')
-        {
-        player.animations.play('right');
-        facing = 'right';
+            if (facing != 'right')  {
+                player.animations.play('right');
+                facing = 'right';
+            }
         }
-        }
-        else
-        {
-        if (facing != 'idle')
-        {
-        player.animations.stop();
+        else {
+            if (facing != 'idle')  {
+                player.animations.stop();
 
-        if (facing == 'left')
-        {
-            player.frame = 0;
-        }
-        else
-        {
-            player.frame = 5;
+                if (facing == 'left') {
+                    player.frame = 0;
+                }
+                else {
+                    player.frame = 5;
+                }
+
+            facing = 'idle';
+            }
         }
 
-        facing = 'idle';
-        }
-        }
-
-        if (jumpButton.isDown && player.body.onFloor() && dogWorld.time.now > jumpTimer)
-        {
+        if (jumpButton.isDown && player.body.onFloor() && dogWorld.time.now > jumpTimer) {
         player.body.velocity.y = -250;
         jumpTimer = dogWorld.time.now + 750;
         }
         
-        this.collisionHandler();
+        this.recogerBanderas();
     },
 
 
@@ -184,15 +231,13 @@ var iniciar = {
     /* Debug text permite imprimir encima del ambiente. La mayoria de posiciones logradas
         y la detección de colisiones se hicieron por medio de este debug. En este caso, se hizo para
         detectar cuando jugador y distraccion se cruzaban*/
-        dogWorld.debug.text(" x: " + player.body.x, 32, 32);
-        dogWorld.debug.text("y: " + player.body.y, 32, 64);
 	    
 	    
-	if(contador == 1){
-		dogWorld.debug.text("Puedes abrir la puerta", 32, 256);
-	}
+        if(contador == 5){
+        	dogWorld.debug.text("¡Bien! ¡Puedes ir con tu entrenador!", 32, 256);
+        } else {
+             dogWorld.debug.text(" Banderas recogidas: " + contador, 32, 32);
+        }
     },
-    /*         dogWorld.state.start('fin');
-    */
 
 };
