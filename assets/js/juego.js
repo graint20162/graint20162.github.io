@@ -81,7 +81,7 @@ var iniciar = {
         theBones.body.setSize(40, 32, 0, 0);
         
         // De forma analoga se realiza de la misma forma con la bandera
-        theFlag = dogWorld.add.sprite(818, 528, 'flag');
+        theFlag = dogWorld.add.sprite(820, 528, 'flag');
         dogWorld.physics.enable(theFlag, Phaser.Physics.ARCADE);
         theFlag.body.collideWorldBounds = true;
         theFlag.body.setSize(40, 32, 0, 0);
@@ -178,12 +178,8 @@ var iniciar = {
     /* Debug text permite imprimir encima del ambiente. La mayoria de posiciones logradas
         y la detección de colisiones se hicieron por medio de este debug. En este caso, se hizo para
         detectar cuando jugador y distraccion se cruzaban*/
-        dogWorld.debug.text(" x: " + player.body.x - theFlag.body.x, 32, 32);
-        dogWorld.debug.text("y: " + player.body.y - theFlag.body.y, 32, 64);
-
-        if(player.x == 818 && player.y == 528) {
-                dogWorld.debug.text("¡Lo encontraste!" , 32, 128);
-        }
+        dogWorld.debug.text(" x: " + player.body.x, 32, 32);
+        dogWorld.debug.text("y: " + player.body.y, 32, 64);
     },
     /*         dogWorld.state.start('fin');
     */
