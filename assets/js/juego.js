@@ -90,7 +90,7 @@ var iniciar = {
         //theBones.setAll('body.minBounceVelocity', 0);
 
 
-        theBones = dogWorld.add.sprite(200, 32, 'bone');
+        theBones = dogWorld.add.sprite(320, 976, 'bone');
         dogWorld.physics.enable(theBones, Phaser.Physics.ARCADE);
 
         //player.body.bounce.y = 0.2;
@@ -169,6 +169,12 @@ var iniciar = {
         jumpTimer = dogWorld.time.now + 750;
         }
 
+        /* Si hace contacto con la puerta y si recupera el total de llaves gana */
+        if(player.x == 320 && player.y >= 976) {
+                dogWorld.state.start('fin');
+        }
+
+
     },
 
 
@@ -182,8 +188,12 @@ var iniciar = {
     /* Debug text permite imprimir encima del ambiente. La mayoria de posiciones logradas
         y la detección de colisiones se hicieron por medio de este debug. En este caso, se hizo para
         detectar cuando jugador y distraccion se cruzaban*/
-        dogWorld.debug.text("Diferencia x: " + (player.body.x - (theBones.body.x+16)), 32, 32);
+        dogWorld.debug.text(" x: " + player.body.x , 32, 32);
+        dogWorld.debug.text("y: " + player.body.y , 32, 64);
 
+        if(player.x == 320 && player.y >= 976) {
+                dogWorld.debug.text("LO encontraste" , 32, 128);
+        }
     },
     /*         dogWorld.state.start('fin');
     */
